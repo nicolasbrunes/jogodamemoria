@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="https://cdn.awsli.com.br/1264/1264896/produto/188853058/desenho-t3k1fwz3h6.jpg" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Memória Encantada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-escuro: #0019f7;
+            --azul-medio: #2980b9;
+            --rosa: #000770;
+            --branco: #ffffff;
+            --cinza: #555;
+            --cinza-claro: #eee;
+            --preto: #000000;
+            --sombra: rgba(0, 0, 0, 0.1);
+            --cor-texto: #1e3a8a;
+            --cor-destaque: #1e40af;
+            --cor-subtitulo: #1e3a8a;
+            --cor-caixa-menu: #ffffffd8;
+            --cor-caixa-destaque: #3b82f6;
+            --cor-borda-caixa: #3b82f6;
+            --cor-sombra-caixa: rgba(0, 0, 0, 0.2);
+        }
+body {
+            font-family: 'Delius Swash Caps', cursive;
+            color: var(--cor-texto);
+            margin: 100px;
+            padding: 100px;
+            text-align: center;
+            background-image: url('https://i.ibb.co/sdTpM7yb/miranha.jpg');
+            background-size: 100%;
+            background-position: fixed;
+            background-attachment: relative;
+            min-height: 100vh;
+            padding-top: var(--espacamento-superior);
+            position: relative; /* Para posicionar o botão de voltar */
+        }
+        
+        /* Header com logo */
+        .header {
+            position: center;
+            top: 10px;
+            left: 20px;
+            display: fixed;
+            align-items: center;
+        }
+        
+        .header img {
+            height: 80px;
+            margin-right: 0px;
+        }
+        
+        /* Botão de voltar */
+        .btn-home {
+            position: fixed;
+            bottom: 10px;
+            left: 20px;
+            background-color: var(--cor-destaque);
+            color: white;
+            border: none;
+            padding: 10px 55px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Delius Swash Caps', cursive;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        
+        .btn-home:hover {
+            background-color: #000155;
+            transform: translateY(-2px);
+        }
+        
+        /* Rodapé */
+        footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: var(--cor-texto);
+            background-color: rgb(255, 255, 255);
+            padding: 10px 5px;
+            border-radius: 10px;
+        }
+        
+        .titulo-container {
+            background-color: rgb(255, 255, 255);
+            display: inline-block;
+            padding: 0px 0px;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+        }
+        
+        
+        h1 {
+            color: var(--cor-destaque);
+            font-size: 3.5rem; /* Tamanho aumentado */
+            margin-bottom: 15px; /* Mais espaço */
+            text-shadow: 2px 2px 0 rgb(0, 0, 0);
+            margin: 0;
+        }
+        
+        .subtitle {
+            color: var(--cor-subtitulo); /* Cor rosa forte aplicada */
+            font-size: 2rem; /* Tamanho aumentado */
+            margin-bottom: 0;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.2); /* Sombra mais visível */
+            margin: 0;
+            font-weight: bold; /* Negrito adicionado */
+        }
+        
+        .menu-niveis {
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Espaço entre cards aumentado */
+            flex-wrap: wrap;
+            margin: 0 auto 0px; /* Margem inferior aumentada */
+            max-width: 90%;
+        }
+        
+        .nivel {
+            background-color: var(--cor-caixa-menu);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100px; /* Largura aumentada */
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+            transition: all 0.3s;
+            border: 2px solid var(--cor-borda-caixa); /* Borda mais espessa */
+            cursor: pointer;
+            margin-bottom: 10px; /* Espaço entre linhas */
+        }
+        .nivel.selecionado {
+            background-color: var(--cor-caixa-destaque);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--cor-sombra-caixa);
+        }
+        
+        .nivel.facil {
+            border-top: 5px solid var(--cor-verde-claro);
+        }
+        
+        .nivel.medio {
+            border-top: 5px solid var(--cor-azul-claro);
+        }
+        
+        .nivel.dificil {
+            border-top: 5px solid var(--cor-amarelo-claro);
+        }
+        
+        .nivel h2 {
+            margin-top: 0;
+            color: var(--cor-texto);
+            font-size: 2rem;
+        }
+        
+        .nivel .detalhes {
+            font-size: 1.1rem;
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .nivel .previa {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin: 15px 0;
+        }
+        
+        .previa-carta {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: var(--cor-rosa-suave);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .previa-carta img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+        
+        .btn {
+            background-color: var(--cor-destaque);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px;
+            font-family: 'Delius Swash Caps', cursive;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            background-color: #000f2c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-voltar {
+            background-color: var(--cor-azul-claro);
+            color: var(--cor-texto);
+        }
+        
+        #jogo {
+            display: none;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .info-jogo {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: var(--cor-caixa-menu);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+            font-size: 1.2rem;
+            border: 1px solid var(--cor-borda-caixa);
+        }
+        
+        .tabuleiro {
+            display: grid;
+            grid-gap: 15px;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+        }
+        
+        .tabuleiro.facil {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .tabuleiro.medio {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .tabuleiro.dificil {
+            grid-template-columns: repeat(6, 1fr);
+        }
+        
+        .carta {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: var(--cor-rosa-suave);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .carta:hover {
+            transform: scale(1.05);
+        }
+        
+        .carta .frente, .carta .verso {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+        }
+        
+        .carta .frente {
+            background-color: white;
+            transform: rotateY(180deg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .carta .verso {
+            background-color: var(--cor-rosa-suave);
+            background-image: linear-gradient(135deg, #4971df 0%, #ffd6e5 100%);
+        }
+        
+        .carta.virada {
+            transform: rotateY(180deg);
+        }
+        
+        .carta.encontrada {
+            transform: rotateY(180deg);
+            background-color: var(--cor-verde-claro);
+        }
+        
+        .carta.encontrada .frente {
+            background-color: var(--cor-verde-claro);
+        }
+        
+        .feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--cor-caixa-menu);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: none;
+            max-width: 80%;
+            text-align: center;
+            border: 1px solid var(--cor-borda-caixa);
+            animation: aparecer 0.5s ease-out;
+        }
+        
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        .feedback h2 {
+            color: var(--cor-destaque);
+            margin-top: 0;
+            font-size: 2.5rem;
+        }
+        
+        .feedback p {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+        }
+        
+        .feedback .emoji {
+            font-size: 4rem;
+            margin: 15px 0;
+            display: block;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 99;
+            display: none;
+        }
+        
+        @media (max-width: 600px) {
+            .menu-niveis {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nivel {
+                width: 80%;
+            }
+            
+            .tabuleiro.facil, .tabuleiro.medio, .tabuleiro.dificil {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .feedback {
+                padding: 20px;
+                width: 90%;
+            }
+            
+            .titulo-container {
+                padding: 15px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://i0.wp.com/fmpsc.edu.br/wp-content/uploads/2024/09/Marca-FMP-3-1024x379.png?resize=512%2C190" alt="Logo" width="180">
+    </div>
+    
+    <button class="btn-home" onclick="window.location.href='index.html'">Voltar</button>
+
+    <div class="container">
+        <div id="tela-inicial">
+            <div class="titulo-container">
+                <h1>HERÓIS</h1>
+                <p class="subtitle">Encontre os pares e divirta-se!</p>
+            </div>
+            
+            <div class="menu-niveis">
+                <div class="nivel facil" onclick="selecionarNivel('facil', this)">
+                    <h2>Fácil</h2>
+                    <p class="detalhes">Para Pequenos Exploradores (4-5 anos)</p>
+                    <div class="previa">
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/06/artpoin-the-flash.png" alt="FLASH"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/02/homem-aranha-fundo-transparente6.png" alt="HOMEM ARANHA"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2024/05/artpoin-batman-pack-de-imagens6.png" alt="BATMAN"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/08/artpoin-homem-de-ferro-cute1.png" alt="HOMEM DE FERRO"></div>
+                    </div>
+                    <p>3 pares</p>
+                </div>
+                
+                <div class="nivel medio" onclick="selecionarNivel('medio', this)">
+                    <h2>Médio</h2>
+                    <p class="detalhes">Para Aventureiros da Memória (6-7 anos)</p>
+                    <div class="previa">
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/08/artpoin-homem-de-ferro-cute1.png" alt="HOMEM DE FERRO"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2024/02/artpoin-deadpool18.png" alt="DEADPOOL"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2024/07/deadpool-e-wolverine-logo-mascara1.png" alt="WOLVERINE"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/08/artpoin-hulk-cute6.png" alt="HULK"></div>
+                    </div>
+                    <p>6 pares</p>
+                </div>
+                
+                <div class="nivel dificil" onclick="selecionarNivel('dificil', this)">
+                    <h2>Difícil</h2>
+                    <p class="detalhes">Para Super Desafiadores Grandinhos (8-9 anos)</p>
+                    <div class="previa">
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/11/artpoin-super-homem4.png" alt="SUPERMAN"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2024/06/artpoin-one-punch-man8.png" alt="PUNCHMAN"></div>
+                        <div class="previa-carta"><img src="https://static.wikia.nocookie.net/animeverso/images/b/b7/Black-panther-png-black-panther-png-file-726.png/revision/latest?cb=20221201173947&path-prefix=pt-br" alt="Pantera Negra"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/10/artpoin-mulher-maravilha-desenho3.png" alt="MULHER MARAVILHA"></div>
+                    </div>
+                    <p>12 pares</p>
+                </div>
+            </div>
+            
+            <button id="btn-iniciar" class="btn" disabled onclick="iniciarJogo()">Iniciar Jogo</button>
+        </div>
+        
+        <div id="jogo">
+            <div class="info-jogo">
+                <div id="tempo">⏱️ 00:00</div>
+                <div id="movimentos">🔁 0</div>
+                <div id="pares">❤️ 0/0</div>
+            </div>
+            
+            <div id="tabuleiro" class="tabuleiro facil"></div>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 15px;">
+                <button class="btn btn-voltar" onclick="voltarMenu()">Voltar</button>
+                <button class="btn" onclick="reiniciarJogo()">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="feedback" id="feedback">
+        <span class="emoji">🎉</span>
+        <h2 id="feedback-titulo">Parabéns!</h2>
+        <p id="feedback-mensagem">Você completou em 0 movimentos e 00:00!</p>
+        <button class="btn" onclick="reiniciarJogo()">Jogar Novamente</button>
+        <button class="btn btn-voltar" onclick="voltarMenu()">Voltar ao Menu</button>
+    </div>
+    
+    <footer>Desenvolvido por Nicolas Brunes - 1º fase de ADS-FMP</footer>
+    
+    <script>
+        let nivelAtual = '';
+        let nivelSelecionado = null;
+        let cartas = [];
+        let cartasViradas = [];
+        let paresEncontrados = 0;
+        let movimentos = 0;
+        let tempoInicio = 0;
+        let intervalo;
+        let paresTotais = 0;
+        
+        const temas = {
+            facil: [
+                'https://artpoin.com/wp-content/uploads/2023/06/artpoin-the-flash.png',
+                'https://artpoin.com/wp-content/uploads/2023/02/homem-aranha-fundo-transparente6.png',
+                'https://artpoin.com/wp-content/uploads/2024/05/artpoin-batman-pack-de-imagens6.png'
+            ],
+            medio: [
+                'https://artpoin.com/wp-content/uploads/2023/08/artpoin-homem-de-ferro-cute1.png',
+                'https://artpoin.com/wp-content/uploads/2024/02/artpoin-deadpool18.png',
+                'https://artpoin.com/wp-content/uploads/2024/07/deadpool-e-wolverine-logo-mascara1.png',
+                'https://artpoin.com/wp-content/uploads/2023/08/artpoin-hulk-cute6.png',
+                'https://artpoin.com/wp-content/uploads/2023/11/artpoin-super-homem4.png',
+                'https://artpoin.com/wp-content/uploads/2024/06/artpoin-one-punch-man8.png'
+            ],
+            dificil: [
+                'https://artpoin.com/wp-content/uploads/2023/11/artpoin-super-homem4.png',
+                'https://artpoin.com/wp-content/uploads/2024/06/artpoin-one-punch-man8.png',
+                'https://wallpapers.com/images/hd/1920-x-1080-deadpool-ly4zbtry90wlqjic.jpg',
+                'https://i.pinimg.com/474x/a5/4a/64/a54a640e1472797500d0c1cf2c34a711.jpg',
+                'https://artpoin.com/wp-content/uploads/2023/12/artpoin-desenho-animado-arlequina29.png',
+                'https://artpoin.com/wp-content/uploads/2024/06/artpoin-batman-pack-de-imagens35.png',
+                'https://i.pinimg.com/736x/b1/2c/be/b12cbeee54f1dabdd9547711a9a67d8c.jpg',
+                'https://artpoin.com/wp-content/uploads/2024/05/artpoin-batman-pack-de-imagens11.png',
+                'https://i.pinimg.com/736x/25/8f/71/258f713b7423b8b5451f2e3d09e9c3f1.jpg',
+                'https://i.pinimg.com/736x/84/4b/a9/844ba972e3f60f3b2a56ee77db1de759.jpg',
+                'https://w7.pngwing.com/pngs/960/19/png-transparent-disney-infinity-3-violet-parr-elastigirl-syndrome-the-incredibles-s-the-incredibles-superhero-the-walt-disney-company-fictional-character-thumbnail.png',
+                'https://static.wikia.nocookie.net/disney/images/e/ed/I2_-_Frozone_2.png/revision/latest?cb=20180910193551&path-prefix=pt-br'
+            ]
+        };
+        
+        // Pré-carregar imagens
+        function preloadImages() {
+            const todasImagens = [...temas.facil, ...temas.medio, ...temas.dificil];
+            todasImagens.forEach(imgUrl => {
+                const img = new Image();
+                img.src = imgUrl;
+            });
+        }
+        
+        // Chamar pré-carregamento quando a página carregar
+        window.onload = preloadImages;
+        
+        // Selecionar nível
+        function selecionarNivel(nivel, elemento) {
+            if (nivelSelecionado) {
+                nivelSelecionado.classList.remove('selecionado');
+            }
+            
+            nivelSelecionado = elemento;
+            nivelSelecionado.classList.add('selecionado');
+            nivelAtual = nivel;
+            document.getElementById('btn-iniciar').disabled = false;
+        }
+        
+        // Iniciar jogo
+        function iniciarJogo() {
+            if (!nivelAtual) return;
+            
+            cartasViradas = [];
+            paresEncontrados = 0;
+            movimentos = 0;
+            tempoInicio = Date.now();
+            
+            // Configurar baseado no nível
+            switch(nivelAtual) {
+                case 'facil':
+                    paresTotais = 3;
+                    cartas = temas.facil.slice(0, 3);
+                    document.getElementById('tabuleiro').className = 'tabuleiro facil';
+                    break;
+                case 'medio':
+                    paresTotais = 6;
+                    cartas = temas.medio.slice(0, 6);
+                    document.getElementById('tabuleiro').className = 'tabuleiro medio';
+                    break;
+                case 'dificil':
+                    paresTotais = 12;
+                    cartas = temas.dificil.slice(0, 12);
+                    document.getElementById('tabuleiro').className = 'tabuleiro dificil';
+                    break;
+            }
+            
+            // Iniciar cronômetro
+            clearInterval(intervalo);
+            atualizarCronometro();
+            intervalo = setInterval(atualizarCronometro, 1000);
+            
+            // Duplicar e embaralhar cartas
+            cartas = [...cartas, ...cartas];
+            cartas = embaralhar(cartas);
+            
+            // Atualizar UI
+            document.getElementById('tela-inicial').style.display = 'none';
+            document.getElementById('jogo').style.display = 'block';
+            document.getElementById('pares').textContent = `❤️ 0/${paresTotais}`;
+            document.getElementById('movimentos').textContent = '🔁 0';
+            
+            // Criar tabuleiro
+            const tabuleiro = document.getElementById('tabuleiro');
+            tabuleiro.innerHTML = '';
+            
+            cartas.forEach((carta, index) => {
+                const elementoCarta = document.createElement('div');
+                elementoCarta.className = 'carta';
+                elementoCarta.dataset.index = index;
+                elementoCarta.dataset.conteudo = carta;
+                
+                elementoCarta.innerHTML = `
+                    <div class="frente" style="background-image: url('${carta}')"></div>
+                    <div class="verso"></div>
+                `;
+                
+                elementoCarta.addEventListener('click', virarCarta);
+                tabuleiro.appendChild(elementoCarta);
+            });
+        }
+        
+        // Atualizar cronômetro
+        function atualizarCronometro() {
+            const tempoDecorrido = Math.floor((Date.now() - tempoInicio) / 1000);
+            const minutos = Math.floor(tempoDecorrido / 60);
+            const segundos = tempoDecorrido % 60;
+            document.getElementById('tempo').textContent = `⏱️ ${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+        }
+        
+        // Embaralhar array
+        function embaralhar(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+        
+        // Virar carta
+        function virarCarta() {
+            if (cartasViradas.length >= 2 || this.classList.contains('virada') || this.classList.contains('encontrada')) {
+                return;
+            }
+            
+            this.classList.add('virada');
+            cartasViradas.push(this);
+            
+            if (cartasViradas.length === 2) {
+                movimentos++;
+                document.getElementById('movimentos').textContent = `🔁 ${movimentos}`;
+                
+                const carta1 = cartasViradas[0].dataset.conteudo;
+                const carta2 = cartasViradas[1].dataset.conteudo;
+                
+                if (carta1 === carta2) {
+                    cartasViradas.forEach(carta => {
+                        carta.classList.remove('virada');
+                        carta.classList.add('encontrada');
+                    });
+                    
+                    cartasViradas = [];
+                    paresEncontrados++;
+                    document.getElementById('pares').textContent = `❤️ ${paresEncontrados}/${paresTotais}`;
+                    
+                    if (paresEncontrados === paresTotais) {
+                        clearInterval(intervalo);
+                        const tempoFinal = document.getElementById('tempo').textContent.replace('⏱️ ', '');
+                        mostrarFeedback(true, `Você completou em ${movimentos} movimentos e ${tempoFinal}!`);
+                    }
+                } else {
+                    setTimeout(() => {
+                        cartasViradas.forEach(carta => {
+                            carta.classList.remove('virada');
+                        });
+                        cartasViradas = [];
+                    }, 1000);
+                }
+            }
+        }
+        
+        // Mostrar feedback
+        function mostrarFeedback(vitoria, mensagem) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('feedback').style.display = 'block';
+            document.getElementById('feedback-titulo').textContent = vitoria ? 'Parabéns!' : 'Ops!';
+            document.getElementById('feedback-mensagem').textContent = mensagem;
+            document.querySelector('.feedback .emoji').textContent = vitoria ? '🎉' : '😢';
+        }
+        
+        // Voltar ao menu
+        function voltarMenu() {
+            clearInterval(intervalo);
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('tela-inicial').style.display = 'block';
+            document.getElementById('jogo').style.display = 'none';
+            
+            if (nivelSelecionado) {
+                nivelSelecionado.classList.remove('selecionado');
+                nivelSelecionado = null;
+            }
+            
+            document.getElementById('btn-iniciar').disabled = true;
+            nivelAtual = '';
+        }
+        
+        // Reiniciar jogo
+        function reiniciarJogo() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            iniciarJogo();
+        }
+    </script>
+</body>
+</html>

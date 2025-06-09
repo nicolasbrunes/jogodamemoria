@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/03/princesas-disney.png?w=1200&h=900&crop=1" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memória Encantada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-rosa-suave: #ffbdd3;
+            --cor-rosa-claro: #ffd6e5;
+            --cor-azul-claro: #c4e0ff;
+            --cor-amarelo-claro: #fff2b2;
+            --cor-verde-claro: #ffffff;
+            --cor-texto: #ff85a2;
+            --cor-destaque: #ff85a2;
+            --cor-subtitulo: #ff85a2;
+            
+            --cor-caixa-menu: #ffffffd8; 
+            --cor-caixa-destaque: #ffbdd3;
+            --cor-borda-caixa: #ffbdd3;
+            --cor-sombra-caixa: rgba(0, 0, 0, 0.2);
+            
+            --espacamento-superior: 200px;
+        }
+        
+        body {
+            font-family: 'Delius Swash Caps', cursive;
+            color: var(--cor-texto);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: url('https://wallpapers.com/images/hd/disney-princesses-pictures-xiksvguzlw72ssjl.jpg');
+            background-size: fixed;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding-top: var(--espacamento-superior);
+            position: relative; /* Para posicionar o botão de voltar */
+        }
+        
+        /* Header com logo */
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        /* Botão de voltar */
+        .btn-home {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--cor-destaque);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Delius Swash Caps', cursive;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        
+        .btn-home:hover {
+            background-color: #ff6b8b;
+            transform: translateY(-2px);
+        }
+        
+        /* Rodapé */
+        footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: var(--cor-texto);
+            background-color: rgba(255,255,255,0.7);
+            padding: 10px 5px;
+            border-radius: 10px;
+        }
+        
+        .titulo-container {
+            background-color: rgb(255, 255, 255);
+            display: inline-block;
+            padding: 0px 0px;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+        }
+        
+        
+        h1 {
+            color: var(--cor-destaque);
+            font-size: 3.5rem; /* Tamanho aumentado */
+            margin-bottom: 15px; /* Mais espaço */
+            text-shadow: 2px 2px 0 rgb(0, 0, 0);
+            margin: 0;
+        }
+        
+        .subtitle {
+            color: var(--cor-subtitulo); /* Cor rosa forte aplicada */
+            font-size: 2rem; /* Tamanho aumentado */
+            margin-bottom: 0;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.2); /* Sombra mais visível */
+            margin: 0;
+            font-weight: bold; /* Negrito adicionado */
+        }
+        
+        .menu-niveis {
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Espaço entre cards aumentado */
+            flex-wrap: wrap;
+            margin: 0 auto 0px; /* Margem inferior aumentada */
+            max-width: 90%;
+        }
+        
+        .nivel {
+            background-color: var(--cor-caixa-menu);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100px; /* Largura aumentada */
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+            transition: all 0.3s;
+            border: 2px solid var(--cor-borda-caixa); /* Borda mais espessa */
+            cursor: pointer;
+            margin-bottom: 10px; /* Espaço entre linhas */
+        }
+        .nivel.selecionado {
+            background-color: var(--cor-caixa-destaque);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--cor-sombra-caixa);
+        }
+        
+        .nivel.facil {
+            border-top: 5px solid var(--cor-verde-claro);
+        }
+        
+        .nivel.medio {
+            border-top: 5px solid var(--cor-azul-claro);
+        }
+        
+        .nivel.dificil {
+            border-top: 5px solid var(--cor-amarelo-claro);
+        }
+        
+        .nivel h2 {
+            margin-top: 0;
+            color: var(--cor-texto);
+            font-size: 2rem;
+        }
+        
+        .nivel .detalhes {
+            font-size: 1.1rem;
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .nivel .previa {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin: 15px 0;
+        }
+        
+        .previa-carta {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: var(--cor-rosa-suave);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .previa-carta img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+        
+        .btn {
+            background-color: var(--cor-destaque);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px;
+            font-family: 'Delius Swash Caps', cursive;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            background-color: #ff6b8b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-voltar {
+            background-color: var(--cor-azul-claro);
+            color: var(--cor-texto);
+        }
+        
+        #jogo {
+            display: none;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .info-jogo {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: var(--cor-caixa-menu);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+            font-size: 1.2rem;
+            border: 1px solid var(--cor-borda-caixa);
+        }
+        
+        .tabuleiro {
+            display: grid;
+            grid-gap: 15px;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 4px 8px var(--cor-sombra-caixa);
+        }
+        
+        .tabuleiro.facil {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .tabuleiro.medio {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .tabuleiro.dificil {
+            grid-template-columns: repeat(6, 1fr);
+        }
+        
+        .carta {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: var(--cor-rosa-suave);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .carta:hover {
+            transform: scale(1.05);
+        }
+        
+        .carta .frente, .carta .verso {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+        }
+        
+        .carta .frente {
+            background-color: white;
+            transform: rotateY(180deg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .carta .verso {
+            background-color: var(--cor-rosa-suave);
+            background-image: linear-gradient(135deg, #ffbdd3 0%, #ffd6e5 100%);
+        }
+        
+        .carta.virada {
+            transform: rotateY(180deg);
+        }
+        
+        .carta.encontrada {
+            transform: rotateY(180deg);
+            background-color: var(--cor-verde-claro);
+        }
+        
+        .carta.encontrada .frente {
+            background-color: var(--cor-verde-claro);
+        }
+        
+        .feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--cor-caixa-menu);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: none;
+            max-width: 80%;
+            text-align: center;
+            border: 1px solid var(--cor-borda-caixa);
+            animation: aparecer 0.5s ease-out;
+        }
+        
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        .feedback h2 {
+            color: var(--cor-destaque);
+            margin-top: 0;
+            font-size: 2.5rem;
+        }
+        
+        .feedback p {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+        }
+        
+        .feedback .emoji {
+            font-size: 4rem;
+            margin: 15px 0;
+            display: block;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 99;
+            display: none;
+        }
+        
+        @media (max-width: 600px) {
+            .menu-niveis {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nivel {
+                width: 80%;
+            }
+            
+            .tabuleiro.facil, .tabuleiro.medio, .tabuleiro.dificil {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .feedback {
+                padding: 20px;
+                width: 90%;
+            }
+            
+            .titulo-container {
+                padding: 15px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div class="header">
+        <img src="https://i0.wp.com/fmpsc.edu.br/wp-content/uploads/2024/09/Marca-FMP-3-1024x379.png?resize=512%2C190" alt="Logo" width="180" height="">
+    </div>
+    <button class="btn-home" onclick="window.location.href='index.html'">Voltar</button>
+
+    <div class="container">
+        <div id="tela-inicial">
+            <div class="titulo-container">
+                <h1>PRINCESAS</h1>
+                <p class="subtitle">Encontre os pares e divirta-se!</p>
+            </div>
+            
+            <div class="menu-niveis">
+                <div class="nivel facil" onclick="selecionarNivel('facil', this)">
+                    <h2>Fácil</h2>
+                    <p class="detalhes">Para Pequenos Exploradores (4-5 anos)</p>
+                    <div class="previa">
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente56.png" alt="PRINCESAS"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-png1.png" alt="PRINCESAS"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente78.png" alt="PRINCESAS"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente16.png" alt="PRINCESAS"></div>
+                    </div>
+                    <p>3 pares</p>
+                </div>
+                
+                <div class="nivel medio" onclick="selecionarNivel('medio', this)">
+                    <h2>Médio</h2>
+                    <p class="detalhes">Para Aventureiros da Memória (6-7 anos)</p>
+                    <div class="previa">
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente48.png" alt="ARIEL"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente27.png" alt="Rapunzel"></div>
+                        <div class="previa-carta"><img src="https://png.pngtree.com/png-vector/20240623/ourmid/pngtree-3d-merida-fan-art-disney-princess-wallpaper-png-image_12834338.png" alt="Valente"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/01/os-sete-anoes-png3.png" alt="Branca de Neve"></div>
+                    </div>
+                    <p>6 pares</p>
+                </div>
+                
+                <div class="nivel dificil" onclick="selecionarNivel('dificil', this)">
+                    <h2>Difícil</h2>
+                    <p class="detalhes">Para Super Desafiadores Grandinhos (8-9 anos)</p>
+                    <div class="previa">
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente52-1.png" alt="Ariel"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente24.png    " alt="Princesas"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente51.png" alt="Ariel 2"></div>
+                        <div class="previa-carta"><img src="https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente9.png" alt="Tiana"></div>
+                    </div>
+                    <p>12 pares</p>
+                </div>
+            </div>
+            
+            <button id="btn-iniciar" class="btn" disabled onclick="iniciarJogo()">Iniciar Jogo</button>
+        </div>
+        
+        <div id="jogo">
+            <div class="info-jogo">
+                <div id="tempo">⏱️ Tempo: 00:00</div>
+                <div id="movimentos">🔁 Movimentos: 0</div>
+                <div id="pares">❤️ Pares: 0/0</div>
+            </div>
+            
+            <div id="tabuleiro" class="tabuleiro facil"></div>
+            
+            <button class="btn btn-voltar" onclick="voltarMenu()">Voltar ao Menu</button>
+            <button class="btn" onclick="reiniciarJogo()">Reiniciar</button>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="feedback" id="feedback">
+        <span class="emoji">🎉</span>
+        <h2 id="feedback-titulo">Parabéns!</h2>
+        <p id="feedback-mensagem">Você completou em 0 movimentos e 00:00!</p>
+        <button class="btn" onclick="reiniciarJogo()">Jogar Novamente</button>
+        <button class="btn btn-voltar" onclick="voltarMenu()">Voltar ao Menu</button>
+    </div>
+    
+    <script>
+        let nivelAtual = '';
+        let nivelSelecionado = null;
+        let cartas = [];
+        let cartasViradas = [];
+        let paresEncontrados = 0;
+        let movimentos = 0;
+        let tempoInicio = 0;
+        let intervalo;
+        let paresTotais = 0;
+        
+        const temas = {
+            facil: [
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente78.png',
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-png1.png',
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente56.png'
+            ],
+            medio: [
+                'https://static.wikia.nocookie.net/disneyprincesas/images/a/a9/Moana_Waialiki2.png/revision/latest?cb=20161208135511&path-prefix=pt-br',
+                'https://upload.wikimedia.org/wikipedia/pt/thumb/c/ce/Rapunzel_by_Disney.png/250px-Rapunzel_by_Disney.png',
+                'https://i.pinimg.com/236x/24/e4/75/24e475c8b70351f8ea6b602e25ccca1b.jpg',
+                'https://artpoin.com/wp-content/uploads/2023/01/os-sete-anoes-png3.png',
+                'https://i.pinimg.com/474x/0f/05/60/0f05601cdc3deff64252497f462b1687.jpg',
+                'https://static.wikia.nocookie.net/disneyprincesas/images/5/55/Princess-tiana-disney.jpg/revision/latest?cb=20160911162226&path-prefix=pt-br'
+            ],
+            dificil: [
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente52-1.png',
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente24.png',
+                'https://i.pinimg.com/474x/b2/a1/41/b2a141a4dad2258e89de5140767d8b97.jpg',
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente4-724x1024.png',
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente51.png',
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente9.png',
+                'https://artpoin.com/wp-content/uploads/2023/04/princesas-disney-fundo-transparente17.png',
+                'https://artpoin.com/wp-content/uploads/2023/10/artpoin-personagens-frozen20.png',
+                'https://i.pinimg.com/736x/b8/97/9d/b8979dccbde88ace43e9397948055ef2.jpg',
+                'https://artpoin.com/wp-content/uploads/2023/10/artpoin-personagens-frozen31.png',
+                'https://artpoin.com/wp-content/uploads/2023/09/artpoin-personagens-frozen4-1.png',
+                'https://i.pinimg.com/736x/35/6d/41/356d416554728e233caa55c4efa652cf.jpg'
+            ]
+        };
+        
+        // Pré-carregar imagens
+        function preloadImages() {
+            const todasImagens = [...temas.facil, ...temas.medio, ...temas.dificil];
+            todasImagens.forEach(imgUrl => {
+                const img = new Image();
+                img.src = imgUrl;
+            });
+        }
+        
+        // Chamar pré-carregamento quando a página carregar
+        window.onload = preloadImages;
+        
+        // Selecionar nível
+        function selecionarNivel(nivel, elemento) {
+            if (nivelSelecionado) {
+                nivelSelecionado.classList.remove('selecionado');
+            }
+            
+            nivelSelecionado = elemento;
+            nivelSelecionado.classList.add('selecionado');
+            nivelAtual = nivel;
+            document.getElementById('btn-iniciar').disabled = false;
+        }
+        
+        // Iniciar jogo
+        function iniciarJogo() {
+            if (!nivelAtual) return;
+            
+            cartasViradas = [];
+            paresEncontrados = 0;
+            movimentos = 0;
+            tempoInicio = Date.now();
+            
+            // Configurar baseado no nível
+            switch(nivelAtual) {
+                case 'facil':
+                    paresTotais = 3;
+                    cartas = temas.facil.slice(0, 3);
+                    document.getElementById('tabuleiro').className = 'tabuleiro facil';
+                    break;
+                case 'medio':
+                    paresTotais = 6;
+                    cartas = temas.medio.slice(0, 6);
+                    document.getElementById('tabuleiro').className = 'tabuleiro medio';
+                    break;
+                case 'dificil':
+                    paresTotais = 12;
+                    cartas = temas.dificil.slice(0, 12);
+                    document.getElementById('tabuleiro').className = 'tabuleiro dificil';
+                    break;
+            }
+            
+            // Iniciar cronômetro
+            clearInterval(intervalo);
+            atualizarCronometro();
+            intervalo = setInterval(atualizarCronometro, 1000);
+            
+            // Duplicar e embaralhar cartas
+            cartas = [...cartas, ...cartas];
+            cartas = embaralhar(cartas);
+            
+            // Atualizar UI
+            document.getElementById('tela-inicial').style.display = 'none';
+            document.getElementById('jogo').style.display = 'block';
+            document.getElementById('pares').textContent = `❤️ Pares: 0/${paresTotais}`;
+            document.getElementById('movimentos').textContent = '🔁 Movimentos: 0';
+            
+            // Criar tabuleiro
+            const tabuleiro = document.getElementById('tabuleiro');
+            tabuleiro.innerHTML = '';
+            
+            cartas.forEach((carta, index) => {
+                const elementoCarta = document.createElement('div');
+                elementoCarta.className = 'carta';
+                elementoCarta.dataset.index = index;
+                elementoCarta.dataset.conteudo = carta;
+                
+                elementoCarta.innerHTML = `
+                    <div class="frente" style="background-image: url('${carta}')"></div>
+                    <div class="verso"></div>
+                `;
+                
+                elementoCarta.addEventListener('click', virarCarta);
+                tabuleiro.appendChild(elementoCarta);
+            });
+        }
+        
+        // Atualizar cronômetro
+        function atualizarCronometro() {
+            const tempoDecorrido = Math.floor((Date.now() - tempoInicio) / 1000);
+            const minutos = Math.floor(tempoDecorrido / 60);
+            const segundos = tempoDecorrido % 60;
+            document.getElementById('tempo').textContent = `⏱️ Tempo: ${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+        }
+        
+        // Embaralhar array
+        function embaralhar(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+        
+        // Virar carta
+        function virarCarta() {
+            if (cartasViradas.length >= 2 || this.classList.contains('virada') || this.classList.contains('encontrada')) {
+                return;
+            }
+            
+            this.classList.add('virada');
+            cartasViradas.push(this);
+            
+            if (cartasViradas.length === 2) {
+                movimentos++;
+                document.getElementById('movimentos').textContent = `🔁 Movimentos: ${movimentos}`;
+                
+                const carta1 = cartasViradas[0].dataset.conteudo;
+                const carta2 = cartasViradas[1].dataset.conteudo;
+                
+                if (carta1 === carta2) {
+                    cartasViradas.forEach(carta => {
+                        carta.classList.remove('virada');
+                        carta.classList.add('encontrada');
+                    });
+                    
+                    cartasViradas = [];
+                    paresEncontrados++;
+                    document.getElementById('pares').textContent = `❤️ Pares: ${paresEncontrados}/${paresTotais}`;
+                    
+                    if (paresEncontrados === paresTotais) {
+                        clearInterval(intervalo);
+                        const tempoFinal = document.getElementById('tempo').textContent.replace('⏱️ Tempo: ', '');
+                        mostrarFeedback(true, `Você completou em ${movimentos} movimentos e ${tempoFinal}!`);
+                    }
+                } else {
+                    setTimeout(() => {
+                        cartasViradas.forEach(carta => {
+                            carta.classList.remove('virada');
+                        });
+                        cartasViradas = [];
+                    }, 1000);
+                }
+            }
+        }
+        
+        // Mostrar feedback
+        function mostrarFeedback(vitoria, mensagem) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('feedback').style.display = 'block';
+            document.getElementById('feedback-titulo').textContent = vitoria ? 'Parabéns!' : 'Ops!';
+            document.getElementById('feedback-mensagem').textContent = mensagem;
+            document.querySelector('.feedback .emoji').textContent = vitoria ? '🎉' : '😢';
+        }
+        
+        // Voltar ao menu
+        function voltarMenu() {
+            clearInterval(intervalo);
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('tela-inicial').style.display = 'block';
+            document.getElementById('jogo').style.display = 'none';
+            
+            if (nivelSelecionado) {
+                nivelSelecionado.classList.remove('selecionado');
+                nivelSelecionado = null;
+            }
+            
+            document.getElementById('btn-iniciar').disabled = true;
+            nivelAtual = '';
+        }
+        
+        // Reiniciar jogo
+        function reiniciarJogo() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            iniciarJogo();
+        }
+    </script>
+     <footer>Nicolas Brunes - 1º fase de ADS-FMP</footer>
+</body>
+</html>

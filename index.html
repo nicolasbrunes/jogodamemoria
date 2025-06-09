@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="icon" href="https://i.ibb.co/zWnk0W5v/fmp.webp" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos da Memória - Personagens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-escuro: #0019f7;
+            --azul-medio: #2980b9;
+            --rosa: #e84393;
+            --branco: #ffffff;
+            --cinza: #555;
+            --cinza-claro: #eee;
+            --preto: #000000;
+            --sombra: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%; /* Evita zoom em textos no iOS */
+        }
+        
+        body {
+            font-family: 'Delius Swash Caps', cursive;
+            background: #f0f8ff url('https://i.ibb.co/C3Xp13KY/branco-2.jpg') no-repeat center center fixed;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.5;
+            touch-action: manipulation; /* Melhora a resposta ao toque */
+        }
+
+        .content-wrapper {
+            flex: 1;
+            width: 100%;
+            max-width: 1400px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+  
+        header {
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header-image {
+            max-width: 100%;
+            width: min(350px, 90%);
+            height: auto;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            color: var(--azul-escuro);
+            margin: 0 0 20px 0;
+            padding: 0 15px;
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            position: relative;
+            text-align: center;
+            width: 100%;
+        }
+        
+        h1::after {
+            content: "⬇️";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6em;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 20px auto;
+            width: 100%;
+            padding: 0 10px;
+        }
+        
+        .game-option {
+            background-color: var(--branco);
+            border-radius: 18px;
+            padding: 20px;
+            width: min(320px, 90%);
+            box-shadow: 0 5px 15px var(--sombra);
+            transition: all 0.3s ease;  
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin: 8px 0;
+            border: 1px solid var(--preto);
+        }
+        
+        .game-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+        }
+        
+        .boys {
+            border-top: 8px solid var(--azul-medio);
+        }
+        
+        .girls {
+            border-top: 8px solid var(--rosa);
+        }
+        
+        .boys h2 {
+            color: var(--azul-medio);
+            font-size: clamp(1.7rem, 5vw, 2.2rem);
+        }
+        
+        .girls h2 {
+            color: var(--rosa);
+            font-size: clamp(1.7rem, 5vw, 2.2rem);
+        }
+        
+        h2 {
+            margin: 0 0 12px 0;
+            text-align: center;
+        }
+        
+        img.game-preview {
+            width: 100%;
+            height: clamp(150px, 40vw, 200px);
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 12px 0;
+            border: 3px solid var(--cinza-claro);
+            transition: transform 0.3s ease;
+            background-color: var(--branco);
+            display: block; /* Remove espaço abaixo da imagem */
+        }
+        
+        .game-option:active img.game-preview {
+            transform: scale(0.98); /* Feedback tátil para mobile */
+        }
+
+        .game-option:hover img.game-preview {
+            transform: scale(1.03);
+        }
+        
+        p {
+            color: var(--cinza);
+            font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 0 5px;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 12px;
+        }
+        
+        .boys button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .boys button:active {
+            background: linear-gradient(135deg, #2472a4, #1a5f8a);
+            transform: translateY(1px);
+        }
+        
+        .girls button {
+            background: linear-gradient(135deg, #e84393, #d6306f);
+            box-shadow: 0 4px 8px rgba(232, 67, 147, 0.3);
+        }
+        
+        .girls button:active {
+            background: linear-gradient(135deg, #c02963, #a82456);
+            transform: translateY(1px);
+        }
+        
+        button {
+            color: var(--branco);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            width: min(180px, 80%);
+            font-family: 'Delius Swash Caps', cursive;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent; /* Remove highlight no iOS */
+        }
+        
+        button:hover, button:focus {
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            font-family: 'Delius Swash Caps', cursive;
+            width: 100%;
+            margin-top: auto;
+        }
+        
+        footer p {
+            color: #ecf0f1;
+            margin: 3px 0;
+            font-size: inherit;
+        }
+        
+        /* Melhorias específicas para mobile */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 10px;
+            }
+            
+            h1 {
+                margin-bottom: 15px;
+                font-size: clamp(1.6rem, 7vw, 2rem);
+            }
+            
+            h1::after {
+                bottom: -15px;
+            }
+            
+            .container {
+                gap: 15px;
+            }
+            
+            .game-option {
+                padding: 15px;
+                margin: 5px 0;
+                width: 95%;
+            }
+            
+            h2 {
+                font-size: clamp(1.5rem, 6vw, 1.8rem);
+            }
+            
+            p {
+                margin-bottom: 12px;
+            }
+            
+            button {
+                padding: 9px 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                background: #f0f8ff;
+            }
+            
+            h1 {
+                margin-bottom: 12px;
+            }
+            
+            .header-image {
+                margin-bottom: 10px;
+            }
+            
+            img.game-preview {
+                height: clamp(130px, 35vw, 160px);
+                margin: 10px 0;
+            }
+            
+            .game-option {
+                border-radius: 15px;
+                padding: 12px;
+            }
+        }
+
+        /* Melhorias para telas muito pequenas (ex: Galaxy Fold) */
+        @media (max-width: 350px) {
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            button {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <header>
+            <img class="header-image" src="https://i0.wp.com/fmpsc.edu.br/wp-content/uploads/2024/09/Marca-FMP-3-1024x379.png?resize=512%2C190" alt="Logo FMP" loading="lazy">
+            <h1>PERSONAGENS</h1>
+        </header>
+        
+        <div class="container">
+            <div class="game-option boys" onclick="window.location.href='meninos.html'">
+                <h2>HERÓIS</h2>
+                <img class="game-preview" src="https://png.pngtree.com/png-clipart/20240321/original/pngtree-marvel-studios-white-png-free-download-png-image_14646080.png" alt="Jogo para Meninos" loading="lazy">
+                <p>Divirta-se com esse jogo da memória cheio de aventuras com super-heróis!</p>
+                <div class="btn-container">
+                    <button>Jogar Agora</button>
+                </div>
+            </div>
+            
+            <div class="game-option girls" onclick="window.location.href='meninas.html'">
+                <h2>PRINCESAS</h2>
+                <img class="game-preview" src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/03/Princesas-da-Disney.png?w=1200&h=900&crop=1" alt="Jogo para Meninas" loading="lazy">
+                <p>Aproveite esse jogo da memória com temas encantadores das princesas!</p>
+                <div class="btn-container">
+                    <button>Jogar Agora</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Desenvolvido por Nicolas Brunes - 1º fase de ADS-FMP</p>
+    </footer>
+
+    <script>
+        // Melhoria: Feedback tátil para todos os elementos clicáveis
+        document.querySelectorAll('.game-option, button').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
+
